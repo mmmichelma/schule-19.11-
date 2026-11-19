@@ -10,6 +10,7 @@
 | `unterricht_1_extendsThread` | Unterricht: `MeinThread extends Thread` + `MeinThreadStart` (Hinweis: immer `start()` aufrufen, nie `run()` direkt) |
 | `unterricht_2_Runnable` | Unterricht: `MeinRunnable implements Runnable` + `MeinThreadMitRunnableStart` |
 | `unterricht_3_RunnableEins` | Unterricht: `MeinRunnableEins` gibt den Thread-Namen aus. Die Startklasse `MeinRunnableEinsStart` habe ich ergänzt |
+| `uebung07_Thread_2_Konstruktoren` | Übung 07: Thread mit 2 Konstruktoren (Name, Intervall, optional Anzahl). Teile A–D: `extends Thread` / `implements Runnable`, jeweils mit Start von außen oder im Konstruktor |
 | `chat_einfach` | Arbeitsblatt Chat-Server: einfacher `ChatServer` (Schleife mit `accept()`) + `ChatClient` |
 | `chat_threads` | Erweiterungen: `ThreadChatServer`, `ThreadChatClient` (Konsole) und `ChatClientGUI` (Swing) |
 
@@ -86,3 +87,16 @@ sequenceDiagram
 
 Auf Client-Seite liest ein eigener Empfangs-Thread vom Server, damit Tastatur bzw. GUI nicht blockiert werden
 (Buch S. 489).
+
+## Übung 07: Thread mit 2 Konstruktoren
+
+| Teil | Wie | Start |
+|---|---|---|
+| A | `extends Thread` | von außen: `t1.start()` |
+| B | `extends Thread` | im Konstruktor: `start()` |
+| C | `implements Runnable` | von außen: `new Thread(job, name).start()` |
+| D | `implements Runnable` | im Konstruktor: `new Thread(this, name).start()` |
+
+Der Konstruktor ohne Anzahl ruft mit `this(name, intervall, 0)` den zweiten Konstruktor auf. Die Anzahl `0` bedeutet hier „unendlich“.
+Wird im Konstruktor gestartet (B und D), muss `start()` die **letzte** Anweisung sein. Sonst kann `run()` schon laufen, bevor alle Attribute gesetzt sind.
+Da Thread 2 unendlich läuft, beendet man die Programme mit **Strg + C**.
